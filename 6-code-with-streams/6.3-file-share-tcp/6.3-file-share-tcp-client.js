@@ -26,11 +26,11 @@ sock.connect(
       id++;
 
       const filename = parse(f).base;
-      const ss = createReadStream(f);
+      const fileStream = createReadStream(f);
       let chunk = undefined;
 
-      ss.on("readable", () => {
-        while ((chunk = ss.read()) !== null) {
+      fileStream.on("readable", () => {
+        while ((chunk = fileStream.read()) !== null) {
           const buffer = Buffer.alloc(
             PACKET_CHANNEL_SIZE + PACKET_LENGTH_SIZE + 1
           );
@@ -52,7 +52,7 @@ sock.connect(
         }
       });
 
-      ss.on("close", () => {
+      fileStream.on("close", () => {
         if (++finished === FILES.length) {
           sock.end();
         }
