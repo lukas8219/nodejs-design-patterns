@@ -2,10 +2,34 @@ import { once } from 'events';
 import { request } from 'https';
 import { Readable } from 'stream';
 
-class RequestBuilder {
+export class RequestBuilder {
 
     constructor(method) {
         this._method = method;
+
+        Object.defineProperty(this, '_build', {
+            value: function () {
+                return new Promise((res, rej) => {
+                    const req = request({
+                        method: this._method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        hostname: this._hostname,
+                        path: this._path,
+                        port: this._port,
+                    }, res);
+
+                    if (this._body) {
+                        const buffer = Buffer.from(JSON.stringify(this._body));
+                        Readable.from(buffer)
+                            .pipe(req)
+                    } else {
+                        req.end();
+                    }
+                })
+            }
+        })
     }
 
     static GET() {
@@ -26,7 +50,8 @@ class RequestBuilder {
 
     URL(url) {
         const URL_OBJECT = new URL(url);
-        this._hostname = URL_OBJECT.host;
+        this._hostname = URL_OBJECT.hostname;
+        this._port = URL_OBJECT.port;
         this._path = URL_OBJECT.pathname;
         return this;
     }
@@ -46,36 +71,15 @@ class RequestBuilder {
         return this;
     }
 
-    async buildAsStream() {
-        return new Promise((res, rej) => {
-            const req = request({
-                method: this._method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                hostname: this._hostname,
-                path: this._path,
-            }, res);
-
-            if (this._body) {
-                const buffer = Buffer.from(JSON.stringify(this._body));
-                Readable.from(buffer)
-                    .pipe(req)
-            } else {
-                req.end();
-            }
-        })
-    }
-
     async buildAsPromise() {
         return new Promise(async (res, rej) => {
-            const response = await this.buildAsStream();
+            const response = await this._build();
             const data = [];
 
             response.on('data', (chunk) => data.push(chunk));
             response.on('error', rej);
 
-            const isApplicationJson = response.headers['content-type'].includes('application/json');
+            const isApplicationJson = response.headers['content-type'] && response.headers['content-type'].includes('application/json');
 
             await once(response, 'end');
             if (isApplicationJson) {
@@ -93,6 +97,6 @@ const payload = {
     "password": "12345678"
 };
 
-RequestBuilder.POST(payload).URL(`https://api-nodejs-todolist.herokuapp.com/user/login`).buildAsPromise().then(console.log);
+//RequestBuilder.POST(payload).URL(`https://api-nodejs-todolist.herokuapp.com/user/login`).buildAsPromise().then(console.log);
 
 //Add FILE upload
