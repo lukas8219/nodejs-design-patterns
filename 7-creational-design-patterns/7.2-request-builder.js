@@ -2,8 +2,6 @@ import { once } from 'events';
 import { request } from 'https';
 import { Readable } from 'stream';
 
-
-
 class RequestBuilder {
 
     constructor(method) {
