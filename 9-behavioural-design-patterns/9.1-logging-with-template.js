@@ -1,5 +1,0 @@
-/* 
-Implement the same logging component in the previus exercise ut this time using template pattern.
-We would be them obtain a Console Logger or a File logger class to log to a file.
-Take notes on the differences between Template and Strategy.
- */
