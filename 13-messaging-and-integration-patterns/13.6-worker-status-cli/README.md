@@ -1,0 +1,3 @@
+Use the data aggregator component defined in Exercise 13.5 to implement a command-line application that, when invoked, displays the current status of all the workers of the hashsum cracker application (for example, which chunk they are processing, whether they found a match, and so on).
+
+Casciaro, Mario; Mammino, Luciano. Node.js Design Patterns: Design and implement production-grade Node.js applications using proven patterns and techniques, 3rd Edition (p. 614). Packt Publishing. Edição do Kindle. 

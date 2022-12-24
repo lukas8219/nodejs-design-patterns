@@ -1,4 +1,3 @@
-/* 
 Throught this chapter we did not show you any example about how to shard data across multiple instances, but we explored
 all the necessary patterns to build an application that achives scalability alongs the Z-axis of the scale cube.(the domain/context axis)
 
@@ -9,4 +8,3 @@ expose only one public API endpoint.
 
 HINT: You can use a loadbalance or create an APi orchestration layer that encodes the mapping logic and redirects the traffic accordingly.
 can you also throw a service discovery tool into the mix and apply dynamic load balancing so that groups receiving more traffic can scale as needed?
-*/

@@ -1,0 +1,2 @@
+In our publish/subscribe example with Redis Stream, we didn't need a history service (as we did instead in the related AMQP example) because all the message history was saved in the stream anyway.
+Now, implement such a history service, storing all the incoming messages in a separate database and use this service to retrieve the chat history when a new client

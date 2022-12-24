@@ -1,0 +1,3 @@
+In the AMQP request/reply example, we implemented a Delayed Startup pattern to deal with the fact that the initialize() method is asynchronous. Now, refactor that example by adding pre-initialization queues as we learned in Chapter 11, Advanced Recipes.
+
+Casciaro, Mario; Mammino, Luciano. Node.js Design Patterns: Design and implement production-grade Node.js applications using proven patterns and techniques, 3rd Edition (p. 614). Packt Publishing. Edição do Kindle. 
