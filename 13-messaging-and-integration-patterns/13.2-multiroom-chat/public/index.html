@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    Messages:
+    <div id="messages"></div>
+    <form id="msgForm">
+      <input type="text" placeholder="Send a message" id="msgBox"/>
+      <input type="submit" value="Send"/>
+    </form>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      console.log(`URL ws://${window.document.location.host}/?room=${params.get('room') || 'new-room'}`);
+      const ws = new WebSocket(
+        `ws://${window.document.location.host}/?room=${params.get('room') || 'new-room'}`
+      )
+      ws.onmessage = function (message) {
+        const msgDiv = document.createElement('div')
+        msgDiv.innerHTML = message.data
+        document.getElementById('messages').appendChild(msgDiv)
+      }
+      const form = document.getElementById('msgForm')
+      form.addEventListener('submit', (event) => {
+        event.preventDefault()
+        const message = document.getElementById('msgBox').value
+        ws.send(message)
+        document.getElementById('msgBox').value = ''
+      })
+    </script>
+  </body>
+</html>
