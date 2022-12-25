@@ -14,8 +14,11 @@
     "archiver": "^5.3.1",
     "csv-parser": "^3.0.0",
     "level": "^8.0.0",
+    "serve-handler": "^6.1.5",
+    "sqlite3": "^5.1.4",
     "unzipper": "^0.10.11",
-    "uuid4": "^2.0.3"
+    "uuid4": "^2.0.3",
+    "ws": "^8.11.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
